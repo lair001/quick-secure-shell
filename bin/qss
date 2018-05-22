@@ -1,0 +1,193 @@
+#!/usr/bin/env bash
+
+load_configuration() {
+	if [ $config_file_path ] && [ -f $config_file_path ]; then
+		source $config_file_path
+		keys_directory_path=$default_keys_directory_path
+		profiles_directory_path=$default_profiles_directory_path
+		profile_file_name=$default_profile_file_name
+	fi
+}
+
+load_profile() {
+	if [ $profiles_directory_path$profile_file_name ] && [ -f $profiles_directory_path$profile_file_name ]; then
+		source $profiles_directory_path$profile_file_name
+		username=$default_username
+		ip_address=$default_ip_address
+		key_file_name=$default_key_file_name
+	fi
+}
+
+get_key_file_path() {
+	printf $keys_directory_path$key_file_name
+}
+
+get_profile_file_path() {
+	printf $profiles_directory_path$profile_file_name
+}
+
+should_create() {
+	[ "$create" = 'true' ]
+	return $?
+}
+
+should_edit() {
+	[ "$edit" = 'true' ]
+	return $?
+}
+
+change_default_username() {
+	sed -i "s/default_username=$default_username/default_username=$username/g" $(get_profile_file_path)
+}
+
+change_default_ip_address() {
+	sed -i "s/default_ip_address=$default_ip_address/default_ip_address=$ip_address/g" $(get_profile_file_path)
+}
+
+change_default_key_file() {
+	sed -i "s|default_key_file_name=$default_key_file_name|default_key_file_name=$key_file_name|g" $(get_profile_file_path)
+}
+
+change_default_profile_file() {
+	sed -i "s|default_profile_file_name=$default_profile_file_name|default_profile_file_name=$profile_file_name|g" $config_file_path
+}
+
+create_profile_file() {
+	touch $(get_profile_file_path)
+	chmod 600 $(get_profile_file_path)
+	printf 'default_username='$username'\n' >> $(get_profile_file_path)
+	printf 'default_ip_address='$ip_address'\n' >> $(get_profile_file_path)
+	printf 'default_key_file_name='$key_file_name'\n' >> $(get_profile_file_path)
+	change_default_profile_file
+}
+
+create_user_directory() {
+	if [ ! -d $qss_user_directory_path ]; then
+		mkdir $qss_user_directory_path
+		chmod 700 $qss_user_directory_path
+	fi
+}
+
+create_user_keys_directory() {
+	if [ ! -d $qss_user_directory_path'keys' ]; then
+		mkdir $qss_user_directory_path'keys'
+		chmod 700 $qss_user_directory_path'keys'
+	fi
+}
+
+create_user_profiles_directory() {
+	if [ ! -d $qss_user_directory_path'profiles' ]; then
+		mkdir $qss_user_directory_path'profiles'
+		chmod 700 $qss_user_directory_path'profiles'
+	fi
+}
+
+create_user_configuration_file() {
+	if [ ! -f $config_file_path ]; then
+		touch $config_file_path
+		chmod 600 $config_file_path
+		printf 'default_keys_directory_path=~/qss/keys/\n' >> $config_file_path
+		printf 'default_profiles_directory_path=~/qss/profiles/\n' >> $config_file_path
+		printf 'default_profile_file_name=replace-me\n' >> $config_file_path
+	fi
+}
+
+create_user_folders_and_files() {
+	create_user_directory
+	create_user_keys_directory
+	create_user_profiles_directory
+	create_user_configuration_file
+}
+
+throw_error_for_attempting_to_both_create_and_edit_a_resource() {
+	echo $error_message_for_attempting_to_both_create_and_edit_a_resource
+	exit 2
+}
+
+set_create_as_true() {
+	create='true'
+}
+
+set_create_as_false() {
+	create='false'
+}
+
+set_edit_as_true() {
+	edit='true'
+}
+
+set_edit_as_false() {
+	edit='false'
+}
+
+initialize_flags() {
+	set_create_as_false
+	set_edit_as_false
+}
+
+initialize_script() {
+	qss_user_directory_path=~/qss/
+	config_file_path=$qss_user_directory_path'qss.conf'
+	load_configuration
+	load_profile
+	error_message_for_attempting_to_both_create_and_edit_a_resource="Cannot both create and edit a resource."
+	initialize_flags
+}
+
+initialize_script
+
+while getopts "ceu:i:k:p:f" option; do
+	case "$option" in
+		c)
+			if should_edit; then
+				throw_error_for_attempting_to_both_create_and_edit_a_resource
+			fi
+			set_create_as_true
+			continue
+			;;
+		e)
+			if should_create; then
+				throw_error_for_attempting_to_both_create_and_edit_a_resource
+			fi
+			set_edit_as_true
+			continue
+			;;
+		u)
+			username=$OPTARG
+			if should_edit; then
+				change_default_username
+			fi
+			;;
+		i)
+			ip_address=$OPTARG
+			if should_edit; then
+				change_default_ip_address
+			fi
+			;;
+		k)
+			key_file_name=$OPTARG
+			if should_edit; then
+				change_default_key_file
+			fi
+			;;
+		p)
+			profile_file_name=$OPTARG
+			if should_create; then
+				create_profile_file
+			fi
+			if should_edit; then
+				change_default_profile_file
+			fi
+			load_profile
+			;;
+		f)
+			if should_create; then
+				create_user_folders_and_files
+			fi
+			exit 0
+			;;
+	esac
+	initialize_flags
+done
+
+ssh $username@$ip_address -i $(get_key_file_path)
