@@ -10,16 +10,10 @@ load_libraries() {
 	source "$library_directory_path"'router.sh'
 }
 
-throw_error_for_attempting_to_both_create_and_change_default_a_resource() {
-	echo $error_message_for_attempting_to_both_create_and_change_default_a_resource
-	exit 2
-}
-
 initialize_script() {
 	load_libraries
 	load_configuration
 	load_profile
-	error_message_for_attempting_to_both_create_and_change_default_a_resource="Cannot both create and change_default a resource."
 	initialize_actions
 }
 

@@ -1,16 +1,10 @@
 process_option() {
 	case "$1" in
-		d)
-			if should_change_default; then
-				throw_error_for_attempting_to_both_create_and_change_default_a_resource
-			fi
+		c)
 			set_create_as_true
 			continue
 			;;
-		e)
-			if should_create; then
-				throw_error_for_attempting_to_both_create_and_change_default_a_resource
-			fi
+		d)
 			set_change_default_as_true
 			continue
 			;;
