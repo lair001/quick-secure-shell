@@ -3,6 +3,7 @@
 load_libraries() {
 	library_directory_path='./lib/qss/'
 	source "$library_directory_path"'action-manager.sh'
+	source "$library_directory_path"'connector.sh'
 	source "$library_directory_path"'defaults-manager.sh'
 	source "$library_directory_path"'folder-and-file-creator.sh'
 	source "$library_directory_path"'loader.sh'
@@ -19,9 +20,11 @@ initialize_script() {
 
 initialize_script
 
-while getopts "cdu:i:k:p:f" option; do
+while getopts "cdu:i:k:p:fs" option; do
 	process_option "$option"
 	initialize_actions
 done
 
-ssh $username@$ip_address -i $(get_key_file_path)
+if [ -z "$1" ]; then
+	ssh_into_server
+fi

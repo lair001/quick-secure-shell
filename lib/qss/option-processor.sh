@@ -52,7 +52,9 @@ process_option() {
 			if should_create; then
 				create_user_folders_and_files
 			fi
-			exit 0
+			;;
+		s)
+			ssh_into_server
 			;;
 	esac
 }
