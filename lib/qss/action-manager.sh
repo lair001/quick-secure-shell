@@ -1,30 +1,41 @@
+set_as_true() {
+	declare -g "$1"='true'
+}
+
+set_as_false() {
+	declare -g "$1"='false'
+}
+
 set_create_as_true() {
-	create='true'
+	set_as_true 'create'
 }
 
 set_create_as_false() {
-	create='false'
+	set_as_false 'create'
 }
 
-set_edit_as_true() {
-	edit='true'
+set_change_default_as_true() {
+	set_as_true 'change_default'
 }
 
-set_edit_as_false() {
-	edit='false'
+set_change_default_as_false() {
+	set_as_false 'change_default'
 }
 
-initialize_flags() {
+initialize_actions() {
 	set_create_as_false
-	set_edit_as_false
+	set_change_default_as_false
+}
+
+should_do() {
+	[ "$1" = 'true' ]
+	return $?
 }
 
 should_create() {
-	[ "$create" = 'true' ]
-	return $?
+	should_do "$create"
 }
 
-should_edit() {
-	[ "$edit" = 'true' ]
-	return $?
+should_change_default() {
+	should_do "$change_default"
 }
