@@ -19,7 +19,7 @@ initialize_script() {
 
 initialize_script
 
-while getopts "ceu:i:k:p:f" option; do
+while getopts "cdu:i:k:p:f" option; do
 	process_option "$option"
 	initialize_actions
 done
