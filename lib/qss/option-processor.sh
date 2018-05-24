@@ -1,5 +1,9 @@
 process_option() {
 	case "$1" in
+		l)
+			set_load_as_true
+			continue
+			;;
 		c)
 			set_create_as_true
 			continue
@@ -9,32 +13,40 @@ process_option() {
 			continue
 			;;
 		u)
-			username=$OPTARG
+			if should_load; then
+				username="$OPTARG"
+			fi
 			if should_change_default; then
-				change_default_username
+				change_default_username "$OPTARG"
 			fi
 			;;
 		i)
-			ip_address=$OPTARG
+			if should_load; then
+				ip_address="$OPTARG"
+			fi
 			if should_change_default; then
-				change_default_ip_address
+				change_default_ip_address "$OPTARG"
 			fi
 			;;
 		k)
-			key_file_name=$OPTARG
+			if should_load; then
+				key_file_name="$OPTARG"
+			fi
 			if should_change_default; then
-				change_default_key_file
+				change_default_key_file "$OPTARG"
 			fi
 			;;
 		p)
-			profile_file_name=$OPTARG
+			if should_load; then
+				profile_file_name="$OPTARG"
+				load_profile
+			fi
 			if should_create; then
-				create_profile_file
+				create_profile_file "$OPTARG"
 			fi
 			if should_change_default; then
-				change_default_profile_file
+				change_default_profile_file "$OPTARG"
 			fi
-			load_profile
 			;;
 		f)
 			if should_create; then

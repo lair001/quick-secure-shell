@@ -1,10 +1,9 @@
 create_profile_file() {
-	touch $(get_profile_file_path)
-	chmod 600 $(get_profile_file_path)
-	printf 'default_username='$username'\n' >> $(get_profile_file_path)
-	printf 'default_ip_address='$ip_address'\n' >> $(get_profile_file_path)
-	printf 'default_key_file_name='$key_file_name'\n' >> $(get_profile_file_path)
-	change_default_profile_file
+	touch $(get_profile_file_path "$1")
+	chmod 600 $(get_profile_file_path "$1")
+	printf 'default_username='"$username"'\n' >> $(get_profile_file_path "$1")
+	printf 'default_ip_address='"$ip_address"'\n' >> $(get_profile_file_path "$1")
+	printf 'default_key_file_name='"$key_file_name"'\n' >> $(get_profile_file_path "$1")
 }
 
 create_user_directory() {
