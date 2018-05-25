@@ -9,6 +9,7 @@ load_libraries() {
 	source "$library_directory_path"'loader.sh'
 	source "$library_directory_path"'option-processor.sh'
 	source "$library_directory_path"'router.sh'
+	source "$library_directory_path"'validator.sh'
 }
 
 initialize_script() {

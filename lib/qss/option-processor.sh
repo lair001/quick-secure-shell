@@ -13,6 +13,7 @@ process_option() {
 			continue
 			;;
 		u)
+			validateUsername "$OPTARG"
 			if should_load; then
 				username="$OPTARG"
 			fi
@@ -29,6 +30,7 @@ process_option() {
 			fi
 			;;
 		k)
+			validateKeyFile "$OPTARG"
 			if should_load; then
 				key_file_name="$OPTARG"
 			fi
