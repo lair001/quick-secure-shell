@@ -22,6 +22,7 @@ process_option() {
 			fi
 			;;
 		h)
+			validate_host_address "$OPTARG"
 			if should_load; then
 				host_address="$OPTARG"
 			fi
