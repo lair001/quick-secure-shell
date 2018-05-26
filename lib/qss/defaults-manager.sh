@@ -2,8 +2,8 @@ change_default_username() {
 	sed -i "s/default_username=$default_username/default_username=$1/g" $(get_profile_file_path)
 }
 
-change_default_ip_address() {
-	sed -i "s/default_ip_address=$default_ip_address/default_ip_address=$1/g" $(get_profile_file_path)
+change_default_host_address() {
+	sed -i "s/default_host_address=$default_host_address/default_host_address=$1/g" $(get_profile_file_path)
 }
 
 change_default_key_file() {

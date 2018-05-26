@@ -21,12 +21,12 @@ process_option() {
 				change_default_username "$OPTARG"
 			fi
 			;;
-		i)
+		h)
 			if should_load; then
-				ip_address="$OPTARG"
+				host_address="$OPTARG"
 			fi
 			if should_change_default; then
-				change_default_ip_address "$OPTARG"
+				change_default_host_address "$OPTARG"
 			fi
 			;;
 		k)

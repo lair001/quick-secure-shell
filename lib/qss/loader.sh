@@ -11,7 +11,7 @@ load_profile() {
 	if [ $profiles_directory_path$profile_file_name ] && [ -f $profiles_directory_path$profile_file_name ]; then
 		source $profiles_directory_path$profile_file_name
 		username=$default_username
-		ip_address=$default_ip_address
+		host_address=$default_host_address
 		key_file_name=$default_key_file_name
 	fi
 }

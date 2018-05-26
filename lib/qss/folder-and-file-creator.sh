@@ -2,7 +2,7 @@ create_profile_file() {
 	touch $(get_profile_file_path "$1")
 	chmod 600 $(get_profile_file_path "$1")
 	printf 'default_username='"$username"'\n' >> $(get_profile_file_path "$1")
-	printf 'default_ip_address='"$ip_address"'\n' >> $(get_profile_file_path "$1")
+	printf 'default_host_address='"$host_address"'\n' >> $(get_profile_file_path "$1")
 	printf 'default_key_file_name='"$key_file_name"'\n' >> $(get_profile_file_path "$1")
 }
 
