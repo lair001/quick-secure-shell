@@ -21,7 +21,7 @@ initialize_script() {
 
 initialize_script
 
-while getopts "cdu:i:k:p:fs" option; do
+while getopts "lcdu:i:k:p:fs" option; do
 	process_option "$option"
 	initialize_actions
 done
