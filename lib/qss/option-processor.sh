@@ -30,7 +30,7 @@ process_option() {
 			fi
 			;;
 		k)
-			validateKeyFile "$OPTARG"
+			validateKeyFile $(get_key_file_path "$OPTARG")
 			if should_load; then
 				key_file_name="$OPTARG"
 			fi
