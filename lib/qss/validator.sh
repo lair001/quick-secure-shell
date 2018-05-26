@@ -2,7 +2,8 @@
 
 validateUsername() {
 	isValidUsername() {
-		echo "$1" | grep -E '^[^@/~]{1,32}$' > /dev/null 2>&1
+		username_regex='^[^@/~]{1,32}$'
+		[[ "$1" =~ $username_regex ]]
 		return $?
 	}
 
@@ -16,7 +17,8 @@ validateUsername() {
 
 validateKeyFile() {
 	isValidKeyFile() {
-		[ -f "$1" ] && cat "$1" | grep -E '^\-\-\-\-\-BEGIN RSA PRIVATE KEY\-\-\-\-\-'
+		key_file_regex='^\-\-\-\-\-BEGIN RSA PRIVATE KEY\-\-\-\-\-'
+		[[ $(cat "$1") =~ $key_file_regex ]]
 		return $?
 	}
 
