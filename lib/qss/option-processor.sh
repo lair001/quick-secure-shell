@@ -40,12 +40,12 @@ process_option() {
 			fi
 			;;
 		p)
+			if should_create; then
+				create_profile_file "$OPTARG"
+			fi
 			validate_profile_file $(get_profile_file_path "$OPTARG")
 			if should_load; then
 				load_profile "$OPTARG"
-			fi
-			if should_create; then
-				create_profile_file "$OPTARG"
 			fi
 			if should_change_default; then
 				change_default_profile_file "$OPTARG"
