@@ -8,6 +8,7 @@ load_libraries() {
 	source "$library_directory_path"'folder-and-file-creator.sh'
 	source "$library_directory_path"'loader.sh'
 	source "$library_directory_path"'option-processor.sh'
+	source "$library_directory_path"'reader.sh'
 	source "$library_directory_path"'router.sh'
 	source "$library_directory_path"'validator.sh'
 }
@@ -15,6 +16,7 @@ load_libraries() {
 initialize_script() {
 	load_libraries
 	load_configuration
+	validate_profile_file $(get_profile_file_path)
 	load_profile
 	initialize_actions
 }

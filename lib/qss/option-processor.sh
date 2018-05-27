@@ -13,7 +13,7 @@ process_option() {
 			continue
 			;;
 		u)
-			validateUsername "$OPTARG"
+			validate_username "$OPTARG"
 			if should_load; then
 				username="$OPTARG"
 			fi
@@ -31,7 +31,7 @@ process_option() {
 			fi
 			;;
 		k)
-			validateKeyFile $(get_key_file_path "$OPTARG")
+			validate_key_file $(get_key_file_path "$OPTARG")
 			if should_load; then
 				key_file_name="$OPTARG"
 			fi
@@ -40,9 +40,9 @@ process_option() {
 			fi
 			;;
 		p)
+			validate_profile_file $(get_profile_file_path "$OPTARG")
 			if should_load; then
-				profile_file_name="$OPTARG"
-				load_profile
+				load_profile "$OPTARG"
 			fi
 			if should_create; then
 				create_profile_file "$OPTARG"

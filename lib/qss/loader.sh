@@ -8,10 +8,18 @@ load_configuration() {
 }
 
 load_profile() {
-	if [ $profiles_directory_path$profile_file_name ] && [ -f $profiles_directory_path$profile_file_name ]; then
-		source $profiles_directory_path$profile_file_name
-		username=$default_username
-		host_address=$default_host_address
-		key_file_name=$default_key_file_name
+	if [ ! -z "$1" ]; then
+		profile_file_name="$1"
 	fi
+	local profile_file_path=$(get_profile_file_path)
+
+	validate_profile_file "$profile_file_path"
+
+	default_username=$(read_default_username "$profile_file_path")
+	default_host_address=$(read_default_host_address "$profile_file_path")
+	default_key_file_name=$(read_default_key_file_name "$profile_file_path")
+
+	username="$default_username"
+	host_address="$default_host_address"
+	key_file_name="$default_key_file_name"
 }
