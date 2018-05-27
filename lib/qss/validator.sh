@@ -30,8 +30,8 @@ validate_host_address() {
 
 validate_key_file() {
 	is_valid_key_file() {
-		key_file_regex='^\-\-\-\-\-BEGIN RSA PRIVATE KEY\-\-\-\-\-'
-		[[ $(cat "$1") =~ $key_file_regex ]]
+		key_file_regex='^\-\-\-\-\-BEGIN RSA PRIVATE KEY\-\-\-\-\-.+\-\-\-\-\-END RSA PRIVATE KEY\-\-\-\-\-$'
+		[[ -f "$1" && $(cat "$1" | tr -d '\n') =~ $key_file_regex ]]
 		return $?
 	}
 
