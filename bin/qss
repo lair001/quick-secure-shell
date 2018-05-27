@@ -8,7 +8,8 @@ load_libraries() {
 	source "$library_directory_path"'folder-and-file-creator.sh'
 	source "$library_directory_path"'loader.sh'
 	source "$library_directory_path"'option-processor.sh'
-	source "$library_directory_path"'reader.sh'
+	source "$library_directory_path"'configuration-file-reader.sh'
+	source "$library_directory_path"'profile-file-reader.sh'
 	source "$library_directory_path"'router.sh'
 	source "$library_directory_path"'validator.sh'
 }
