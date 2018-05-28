@@ -38,6 +38,10 @@ create_user_configuration_file() {
 }
 
 create_user_folders_and_files() {
+	if [ -f $(echo "$qss_user_directory_path" | sed -r 's|/$||') ]; then
+		echo "Aborting since desired qss user directory path $qss_user_directory_path already exists as an ordinary file (i.e. not a directory)."
+		exit 2
+	fi
 	create_user_directory
 	create_user_keys_directory
 	create_user_profiles_directory
