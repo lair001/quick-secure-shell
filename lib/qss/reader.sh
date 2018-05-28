@@ -6,10 +6,10 @@ read_field_from_file() {
 	printf "$read_result"
 }
 
-read_field_from_file_and_do_home_expansion() {
+read_path_from_file() {
 	local field_name="$1"
 	local file_path="$2"
 
-	local home_expansion_result=$(read_field_from_file "$field_name" "$file_path" | sed -r 's:~|\$HOME:'"$HOME"':')
-	printf "$home_expansion_result"
+	local read_result=$(read_field_from_file "$field_name" "$file_path" | sed -r 's:~|\$HOME:'"$HOME"':')
+	printf "$read_result"
 }
