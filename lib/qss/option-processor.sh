@@ -9,7 +9,7 @@ process_option() {
 			continue
 			;;
 		d)
-			set_change_default_as_true
+			set_designate_default_as_true
 			continue
 			;;
 		u)
@@ -17,8 +17,8 @@ process_option() {
 			if should_load; then
 				username="$OPTARG"
 			fi
-			if should_change_default; then
-				change_default_username "$OPTARG"
+			if should_designate_default; then
+				designate_default_username "$OPTARG"
 			fi
 			;;
 		h)
@@ -26,8 +26,8 @@ process_option() {
 			if should_load; then
 				host_address="$OPTARG"
 			fi
-			if should_change_default; then
-				change_default_host_address "$OPTARG"
+			if should_designate_default; then
+				designate_default_host_address "$OPTARG"
 			fi
 			;;
 		k)
@@ -35,8 +35,8 @@ process_option() {
 			if should_load; then
 				key_file_name="$OPTARG"
 			fi
-			if should_change_default; then
-				change_default_key_file "$OPTARG"
+			if should_designate_default; then
+				designate_default_key_file "$OPTARG"
 			fi
 			;;
 		p)
@@ -47,8 +47,8 @@ process_option() {
 			if should_load; then
 				load_profile "$OPTARG"
 			fi
-			if should_change_default; then
-				change_default_profile_file "$OPTARG"
+			if should_designate_default; then
+				designate_default_profile_file "$OPTARG"
 			fi
 			;;
 		f)

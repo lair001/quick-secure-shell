@@ -22,17 +22,17 @@ set_create_as_false() {
 	set_as_false 'create'
 }
 
-set_change_default_as_true() {
-	set_as_true 'change_default'
+set_designate_default_as_true() {
+	set_as_true 'designate_default'
 }
 
-set_change_default_as_false() {
-	set_as_false 'change_default'
+set_designate_default_as_false() {
+	set_as_false 'designate_default'
 }
 
 initialize_actions() {
 	set_create_as_false
-	set_change_default_as_false
+	set_designate_default_as_false
 }
 
 should_do() {
@@ -48,6 +48,6 @@ should_create() {
 	should_do "$create"
 }
 
-should_change_default() {
-	should_do "$change_default"
+should_designate_default() {
+	should_do "$designate_default"
 }
