@@ -17,7 +17,9 @@ load_libraries() {
 
 initialize_script() {
 	load_libraries
-	load_configuration
+	if [ -d "$qss_user_directory_path" ]; then
+		load_configuration
+	fi
 	initialize_actions
 }
 
