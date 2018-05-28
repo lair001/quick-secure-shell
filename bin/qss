@@ -17,8 +17,10 @@ load_libraries() {
 initialize_script() {
 	load_libraries
 	load_configuration
-	validate_profile_file $(get_profile_file_path)
-	load_profile
+	if [ ! -z "$profile_file_name" ]; then
+		validate_profile_file $(get_profile_file_path)
+		load_profile
+	fi
 	initialize_actions
 }
 

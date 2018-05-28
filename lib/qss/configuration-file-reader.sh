@@ -7,5 +7,6 @@ read_default_profiles_directory_path() {
 }
 
 read_default_profile_file_name() {
-	printf $(cat "$1" | grep 'default_profile_file_name=' | sed -r 's|default_profile_file_name=||')
+	local read_result=$(cat "$1" | grep 'default_profile_file_name=' | sed -r 's|default_profile_file_name=||')
+	printf "$read_result"
 }

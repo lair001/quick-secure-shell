@@ -33,7 +33,7 @@ create_user_configuration_file() {
 		chmod 600 $config_file_path
 		printf 'default_keys_directory_path=~/qss/keys/\n' >> $config_file_path
 		printf 'default_profiles_directory_path=~/qss/profiles/\n' >> $config_file_path
-		printf 'default_profile_file_name=replace-me\n' >> $config_file_path
+		printf 'default_profile_file_name=\n' >> $config_file_path
 	fi
 }
 
