@@ -75,7 +75,7 @@ validate_directory_path() {
 
 validate_configuration_file() {
 	is_valid_configuration_file() {
-		configuration_file_regex='^default_keys_directory_path=[^[:space:]]+ default_profiles_directory_path=[^[:space:]]+ default_profile_file_name=[^[:space:]]+ $'
+		configuration_file_regex='^default_keys_directory_path=[^[:space:]]+ default_profiles_directory_path=[^[:space:]]+ default_profile_file_name=[^[:space:]]* $'
 		[[ -f "$1" && $(cat "$1" | tr -s '\n' ' ') =~ $configuration_file_regex ]]
 		return $?
 	}
