@@ -19,6 +19,7 @@ process_option() {
 			fi
 			if should_designate_default; then
 				designate_default_username "$OPTARG"
+				username="$OPTARG"
 			fi
 			;;
 		h)
@@ -28,6 +29,7 @@ process_option() {
 			fi
 			if should_designate_default; then
 				designate_default_host_address "$OPTARG"
+				host_address="$OPTARG"
 			fi
 			;;
 		k)
@@ -37,6 +39,7 @@ process_option() {
 			fi
 			if should_designate_default; then
 				designate_default_key_file "$OPTARG"
+				key_file_name="$OPTARG"
 			fi
 			;;
 		p)
@@ -49,6 +52,7 @@ process_option() {
 			fi
 			if should_designate_default; then
 				designate_default_profile_file "$OPTARG"
+				load_profile "$OPTARG"
 			fi
 			;;
 		f)
