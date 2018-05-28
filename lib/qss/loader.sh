@@ -1,12 +1,16 @@
 load_configuration() {
-	if [ $config_file_path ] && [ -f $config_file_path ]; then
-		default_keys_directory_path=$(read_default_keys_directory_path "$config_file_path")
-		default_profiles_directory_path=$(read_default_profiles_directory_path "$config_file_path")
-		default_profile_file_name=$(read_default_profile_file_name "$config_file_path")
+	validate_configuration_file "$config_file_path"
 
-		keys_directory_path="$default_keys_directory_path"
-		profiles_directory_path="$default_profiles_directory_path"
-		profile_file_name="$default_profile_file_name"
+	default_keys_directory_path=$(read_default_keys_directory_path "$config_file_path")
+	default_profiles_directory_path=$(read_default_profiles_directory_path "$config_file_path")
+	default_profile_file_name=$(read_default_profile_file_name "$config_file_path")
+
+	keys_directory_path="$default_keys_directory_path"
+	profiles_directory_path="$default_profiles_directory_path"
+
+	if [ ! -z "$default_profile_file_name" ]; then
+		validate_profile_file $(get_profile_file_path "$default_profile_file_name")
+		load_profile "$default_profile_file_name"
 	fi
 }
 

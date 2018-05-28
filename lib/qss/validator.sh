@@ -60,3 +60,41 @@ validate_profile_file() {
 		exit 2
 	fi
 }
+
+validate_directory_path() {
+	local directory_path="$1"
+	local name="$2"
+
+	if [ -d "$1" ]; then
+		return 0
+	else
+		echo "Provided $name directory path does not point to a directory: $directory_path"
+		exit 2
+	fi
+}
+
+validate_configuration_file() {
+	is_valid_configuration_file() {
+		configuration_file_regex='^default_keys_directory_path=[^[:space:]]+ default_profiles_directory_path=[^[:space:]]+ default_profile_file_name=[^[:space:]]+ $'
+		[[ -f "$1" && $(cat "$1" | tr -s '\n' ' ') =~ $configuration_file_regex ]]
+		return $?
+	}
+	validate_keys_directory_path() {
+		validate_directory_path "$1" 'keys'
+		return $?
+	}
+	validate_profiles_directory_path() {
+		validate_directory_path "$1" 'profiles'
+		return $?
+	}
+
+	if is_valid_configuration_file "$1"; then
+		validate_keys_directory_path $(read_default_keys_directory_path "$1")
+		validate_profiles_directory_path $(read_default_profiles_directory_path "$1")
+
+		return 0
+	else
+		echo "Provided configuration file is invalid: $1"
+		exit 2
+	fi
+}
